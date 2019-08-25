@@ -1,3 +1,4 @@
+from loguru import logger
 from pymongo import MongoClient
 
 from produtos_favoritos_magalu.config import (
@@ -12,6 +13,7 @@ class Database():
     
     def __del__(self):
         self.client.close()
+
 
 class Customer(Database):
     """ Classe destinada as funções para manter Cliente """
@@ -40,9 +42,26 @@ class Customer(Database):
     def update(self, email:str, new_data:dict) -> int:
         """ Altera informações do cliente """
 
-        return self.db.customers.update({'email':email}, {'$set': new_data})
-    
-    def insert_favorite(self, email:str, product_id:str) -> bool:
+        if 'email' in new_data and self.find(new_data['email']):
+            return False
+
+        return self.db.customers.update_one({'email':email}, 
+            {'$set': new_data}).modified_count
+
+    def delete(self, email:str):
+        """ Remove o cliente do banco de dados """
+
+        return self.db.customers.delete_one({'email':email}).deleted_count
+
+
+
+class Favorite(Database):
+    """ Classe destinada as funções para manter Favoritos de Clientes """
+
+    def __init__(self):
+        super().__init__()
+
+    def insert(self, email:str, product_id:str) -> bool:
         customer = self.find(email)
         if not customer:
             return False

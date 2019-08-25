@@ -26,7 +26,26 @@ class Customer(Resource):
             if customer.insert(customer_info['email'], customer_info['name']):
                 return Response.create_success()
             else:
-                return Response.insert_error()
+                return Response.error('insert error')
         else:
             return Response.invalid_format()
 
+    def delete(self):
+        customer_info, customer = request.json, CustomerDB()
+        if all(map(customer_info.get, ['email'])):
+            if customer.delete(customer_info['email']):
+                return Response.success()
+            else:
+                return Response.error('delete error')
+        else:
+            return Response.invalid_format()
+
+    def put(self):
+        customer_info, customer = request.json, CustomerDB()
+        if all(map(customer_info.get, ['email', 'att'])):
+            if customer.update(customer_info['email'], customer_info['att']):
+                return Response.success()
+            else:
+                return Response.error('update error')
+        else:
+            return Response.invalid_format()

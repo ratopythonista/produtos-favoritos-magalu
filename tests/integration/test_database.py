@@ -1,6 +1,6 @@
 from loguru import logger
 
-from produtos_favoritos_magalu.services.database import Database
+from produtos_favoritos_magalu.services.database import Database, Customer
 
 
 def test_database():

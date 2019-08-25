@@ -13,8 +13,8 @@ class Response():
         return {'message':'invalid json format'}, 406
 
     @staticmethod
-    def insert_error():
-        return {'message':'insert fail'}, 500
+    def error(message):
+        return {'message':message}, 500
 
     @staticmethod
     def customer_not_found():
