@@ -3,9 +3,11 @@ import time
 from loguru import logger
 from flask import request
 
+from produtos_favoritos_magalu.routes.customer import Customer
+
 
 def add_resources(api):
-    pass
+    api.add_resource(Customer, '/api/customer/')
 
 
 def start_timer():
