@@ -18,6 +18,13 @@ setup(
     packages=find_packages(exclude=['docs', 'tests']),
     python_requires='>=3.6.*',
     install_requires=[
-            'peppercorn'
+            'flask==1.1.1',
+            'flask_restful==0.3.7',
+            'requests==2.22.0',
+            'pymongo==3.9.0',
+            'loguru==0.3.2',
+            'flask_cors==3.0.8',
+            'flasgger==0.9.3',
+            'gunicorn==19.9.0'
         ],
 )
