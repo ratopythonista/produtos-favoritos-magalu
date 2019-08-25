@@ -14,7 +14,7 @@ setup(
     long_description_content_type='text/markdown',
     url='https://github.com/ratopythonista/produtos-favoritos-magalu',
     author='Rodrigo Guimarães Araújo',
-    author_email='ratopythonista@gmail.com',  # Optional
+    author_email='ratopythonista@gmail.com',
     packages=find_packages(exclude=['docs', 'tests']),
     python_requires='>=3.6.*',
     install_requires=[
