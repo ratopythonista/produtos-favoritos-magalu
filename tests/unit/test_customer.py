@@ -45,7 +45,8 @@ def test_delete():
 def test_update():
     upd_json = {
         "email": "ratopythonista@gmail.com", 
-        "att":{"email":"outroemail@gmail.com", "token":token}
+        "att":{"email":"outroemail@gmail.com"},
+        "token":token
     }
     del_json = {"email":"outroemail@gmail.com", "token":token}
     ins_json = {

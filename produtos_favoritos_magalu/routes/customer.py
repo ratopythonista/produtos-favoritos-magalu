@@ -23,7 +23,7 @@ class Customer(Resource):
     def post(self):
         customer_info, customer = request.json, CustomerDB()
         if all(map(customer_info.get, ['email', 'name', 'token'])):
-            if not validate_token(favorite_info['token']):
+            if not validate_token(customer_info['token']):
                 return Response.error('invalid token')
             if customer.insert(customer_info['email'], customer_info['name']):
                 return Response.create_success()
@@ -35,7 +35,7 @@ class Customer(Resource):
     def delete(self):
         customer_info, customer = request.json, CustomerDB()
         if all(map(customer_info.get, ['email', 'token'])):
-            if not validate_token(favorite_info['token']):
+            if not validate_token(customer_info['token']):
                 return Response.error('invalid token')
             if customer.delete(customer_info['email']):
                 return Response.success()
@@ -47,7 +47,7 @@ class Customer(Resource):
     def put(self):
         customer_info, customer = request.json, CustomerDB()
         if all(map(customer_info.get, ['email', 'att', 'token'])):
-            if not validate_token(favorite_info['token']):
+            if not validate_token(customer_info['token']):
                 return Response.error('invalid token')
             if customer.update(customer_info['email'], customer_info['att']):
                 return Response.success()
