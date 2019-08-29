@@ -1,6 +1,9 @@
+import time
+
 from loguru import logger
 from pymongo import MongoClient
 
+from produtos_favoritos_magalu.services.luizalabs import get_product
 from produtos_favoritos_magalu.config import (
     MONGO_DB, MONGO_HOST, MONGO_PASS, MONGO_PORT, MONGO_USER
 )
@@ -54,7 +57,6 @@ class Customer(Database):
         return self.db.customers.delete_one({'email':email}).deleted_count
 
 
-
 class Favorite(Database):
     """ Classe destinada as funções para manter Favoritos de Clientes """
 
@@ -62,11 +64,39 @@ class Favorite(Database):
         super().__init__()
 
     def insert(self, email:str, product_id:str) -> bool:
-        customer = self.find(email)
-        if not customer:
+        customer = Customer().find(email)
+        product = get_product(product_id)
+        if not customer or not product:
             return False
-        favorites_products = customer.get('favorites', set())
-        favorites_products.add(product_id)
-        self.db.customers.update({'email':email}, 
-            {'$set': {'favorites':favorites_products}})
+        favorites_products = customer.get('favorites', dict())
+        if product_id not in favorites_products:
+            favorites_products[product_id] = time.time()
+        else:
+            return False
+        self.db.customers.update(
+            {'email':email},
+            {'$set': {'favorites':favorites_products}}
+        )
         return True
+
+    def get(self, email:str) -> list:
+        customer = Customer().find(email)
+        if not customer:
+            return list()
+        return customer.get('favorites', list())
+
+    def delete(self, email:str, product_id:str) -> bool:
+        customer = Customer().find(email)
+        product = get_product(product_id)
+        if not customer or not product:
+            return False
+        favorites_products = customer.get('favorites', dict())
+        if product_id in favorites_products:
+            del favorites_products[product_id]
+            self.db.customers.update(
+                {'email':email},
+                {'$set': {'favorites':favorites_products}}
+            )
+            return True
+        else:
+            return False

@@ -1,10 +1,9 @@
 from flask import request
-from loguru import logger
 from flasgger import swag_from
 from flask_restful import Resource
 
-from produtos_favoritos_magalu.services.database import Customer as CustomerDB
 from produtos_favoritos_magalu.routes.responses import Response
+from produtos_favoritos_magalu.services.database import Customer as CustomerDB
 
 
 class Customer(Resource):
