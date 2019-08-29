@@ -1,8 +1,9 @@
 from produtos_favoritos_magalu import app
 
+from loguru import logger
 
 client = app.test_client()
-
+token = client.post('/api/validate/', json={"customer_email":"rodrigoara27@gmail.com"}).json['response']
 
 def test_list():
     response = client.get('/api/customer/')
@@ -12,7 +13,11 @@ def test_list():
 
 
 def test_insert():
-    json = {"email":"rodrigoara27@gmail.com", "name":"Rodrigo Guimarães Araújo"}
+    json = {
+        "email":"ratopythonista@gmail.com", 
+        "name":"Rato Pythonista",
+        "token":token
+    }
 
     response = client.post('/api/customer/', json=json)
     assert response.status_code == 201
@@ -21,7 +26,7 @@ def test_insert():
 
 
 def test_find():
-    param = '?customer_email=rodrigoara27@gmail.com'
+    param = '?customer_email=ratopythonista@gmail.com'
     response = client.get(f'/api/customer/{param}')
     assert response.status_code == 200
     assert 'response' in response.json
@@ -29,7 +34,7 @@ def test_find():
 
 
 def test_delete():
-    json = {"email":"rodrigoara27@gmail.com"}
+    json = {"email":"ratopythonista@gmail.com", "token":token}
 
     response = client.delete('/api/customer/', json=json)
     assert response.status_code == 200
@@ -39,17 +44,19 @@ def test_delete():
 
 def test_update():
     upd_json = {
-        "email": "rodrigoara27@gmail.com", 
-        "att":{"email":"ratopythonista@gmail.com"}
+        "email": "ratopythonista@gmail.com", 
+        "att":{"email":"outroemail@gmail.com", "token":token}
     }
-    del_json = {"email":"ratopythonista@gmail.com"}
+    del_json = {"email":"outroemail@gmail.com", "token":token}
     ins_json = {
-        "email":"rodrigoara27@gmail.com", 
-        "name":"Rodrigo Guimarães Araújo"
+        "email":"ratopythonista@gmail.com", 
+        "name":"Rato Pythonista",
+        "token":token
     }
     ins_json_2 = {
-        "email":"ratopythonista@gmail.com", 
-        "name":"Rodrigo Guimarães Araújo"
+        "email":"outroemail@gmail.com", 
+        "name":"Outra Pessoa",
+        "token":token
     }
 
     # Se já existe alguem com o novo email
