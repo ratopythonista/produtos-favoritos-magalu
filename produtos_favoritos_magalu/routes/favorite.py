@@ -9,6 +9,8 @@ from produtos_favoritos_magalu.services.database import Favorite as FavoriteDB
 
 
 class Favorite(Resource):
+
+    @swag_from('../../docs/favorite_get.yml')
     def get(self):
         customer_email = request.args.get("customer_email")
         favorite, products = FavoriteDB(), list()
@@ -18,6 +20,7 @@ class Favorite(Resource):
                 products.append(product)
         return Response.info(products)
 
+    @swag_from('../../docs/favorite_post.yml')
     def post(self):
         favorite_info, favorite = request.json, FavoriteDB()
         if all(map(favorite_info.get, ['email', 'product_id', 'token'])):
@@ -30,6 +33,7 @@ class Favorite(Resource):
         else:
             return Response.invalid_format()
 
+    @swag_from('../../docs/favorite_delete.yml')
     def delete(self):
         favorite_info, favorite = request.json, FavoriteDB()
         if all(map(favorite_info.get, ['email', 'product_id', 'token'])):

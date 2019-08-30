@@ -1,0 +1,22 @@
+Delete a Customer
+Definitions to how use api to delete a customer.
+---
+tags:
+  - Customer
+parameters:
+  - name: body
+    in: body
+    required: true
+    schema:
+      email: string
+      name: string
+      required:
+        - email
+        - token
+      properties:
+        email:
+          type: string
+          description: The email of Customer
+        token:
+          type: string
+          description: Token to auth in app

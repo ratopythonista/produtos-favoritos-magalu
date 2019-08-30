@@ -1,0 +1,13 @@
+Find the favorites from customer
+Definitions to how use api to find the favorites from a customer.
+---
+tags:
+  - Favorite
+parameters:
+  - name: customer_user
+    in: path
+    type: string
+    default: rodrigoara27@gmail.com
+responses:
+  200:
+    description: A customer favorites

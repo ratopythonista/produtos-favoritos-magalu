@@ -8,6 +8,7 @@ from produtos_favoritos_magalu.services.database import Customer as CustomerDB
 
 
 class Customer(Resource):
+    @swag_from('../../docs/customer_get.yml')
     def get(self):
         customer_email = request.args.get("customer_email")
         customer = CustomerDB()
@@ -19,7 +20,8 @@ class Customer(Resource):
                 return Response.customer_not_found()
             else:
                 return Response.info(customer_info)
-
+    
+    @swag_from('../../docs/customer_post.yml')
     def post(self):
         customer_info, customer = request.json, CustomerDB()
         if all(map(customer_info.get, ['email', 'name', 'token'])):
@@ -32,6 +34,7 @@ class Customer(Resource):
         else:
             return Response.invalid_format()
 
+    @swag_from('../../docs/customer_delete.yml')
     def delete(self):
         customer_info, customer = request.json, CustomerDB()
         if all(map(customer_info.get, ['email', 'token'])):
@@ -44,6 +47,7 @@ class Customer(Resource):
         else:
             return Response.invalid_format()
 
+    @swag_from('../../docs/customer_put.yml')
     def put(self):
         customer_info, customer = request.json, CustomerDB()
         if all(map(customer_info.get, ['email', 'att', 'token'])):

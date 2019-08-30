@@ -11,6 +11,8 @@ from produtos_favoritos_magalu.services.database import Customer as CustomerDB
 
 
 class Auth(Resource):
+
+    @swag_from('../../docs/auth.yml')
     def post(self):
         customer_email = request.json['customer_email']
         if CustomerDB().find(customer_email):

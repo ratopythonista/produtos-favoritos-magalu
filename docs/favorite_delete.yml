@@ -1,0 +1,26 @@
+Delete a favorite from Customer list
+Definitions to how use api to delete a customer favorite.
+---
+tags:
+  - Favorite
+parameters:
+  - name: body
+    in: body
+    required: true
+    schema:
+      email: string
+      name: string
+      required:
+        - email
+        - product_id
+        - token
+      properties:
+        email:
+          type: string
+          description: The email of Customer
+        product_id:
+          type: string
+          description: The ID from Product
+        token:
+          type: string
+          description: Token to auth in app

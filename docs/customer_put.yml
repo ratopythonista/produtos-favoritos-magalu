@@ -1,0 +1,26 @@
+Update a Customer
+Definitions to how use api to update a customer.
+---
+tags:
+  - Customer
+parameters:
+  - name: body
+    in: body
+    required: true
+    schema:
+      email: string
+      name: string
+      required:
+        - email
+        - att
+        - token
+      properties:
+        email:
+          type: string
+          description: The email of Customer
+        att:
+          type: string
+          description: The atualization
+        token:
+          type: string
+          description: Token to auth in app
