@@ -4,6 +4,7 @@ from flask_restful import Resource
 
 from produtos_favoritos_magalu.routes.responses import Response
 from produtos_favoritos_magalu.services.luizalabs import get_product
+from produtos_favoritos_magalu.modules.validate import validate_token
 from produtos_favoritos_magalu.services.database import Favorite as FavoriteDB
 
 
@@ -19,7 +20,9 @@ class Favorite(Resource):
 
     def post(self):
         favorite_info, favorite = request.json, FavoriteDB()
-        if all(map(favorite_info.get, ['email', 'product_id'])):
+        if all(map(favorite_info.get, ['email', 'product_id', 'token'])):
+            if not validate_token(favorite_info['token']):
+                return Response.error('invalid token')
             if favorite.insert(favorite_info['email'], favorite_info['product_id']):
                 return Response.success()
             else:
@@ -29,7 +32,9 @@ class Favorite(Resource):
 
     def delete(self):
         favorite_info, favorite = request.json, FavoriteDB()
-        if all(map(favorite_info.get, ['email', 'product_id'])):
+        if all(map(favorite_info.get, ['email', 'product_id', 'token'])):
+            if not validate_token(favorite_info['token']):
+                return Response.error('invalid token')
             if favorite.delete(favorite_info['email'], favorite_info['product_id']):
                 return Response.success()
             else:
