@@ -3,12 +3,16 @@ import time
 from loguru import logger
 from flask import request
 
+from produtos_favoritos_magalu.routes.auth import Auth
 from produtos_favoritos_magalu.routes.customer import Customer
+from produtos_favoritos_magalu.routes.favorite import Favorite
+
 
 
 def add_resources(api):
     api.add_resource(Customer, '/api/customer/')
-
+    api.add_resource(Favorite, '/api/favorite/')
+    api.add_resource(Auth, '/api/validate/')
 
 def start_timer():
     request.start_time = time.time()

@@ -1,0 +1,18 @@
+Get Token to Auth on APP
+Definitions to how use api to get auth app.
+---
+tags:
+  - Auth
+parameters:
+  - name: body
+    in: body
+    required: true
+    schema:
+      customer_email: string
+      name: string
+      required:
+        - customer_email
+      properties:
+        customer_email:
+          type: string
+          description: The email of Customer
