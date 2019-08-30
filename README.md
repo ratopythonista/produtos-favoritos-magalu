@@ -12,7 +12,7 @@ pytest
 # how to setup?
 
 ```bash
-source .env
+source .env # get .env from master
 python3 setup.py install 
 ```
 
@@ -21,3 +21,6 @@ python3 setup.py install
 ```bash
 gunicorn --workers=2 --bind :8080 produtos_favoritos_magalu:app
 ```
+
+# API DOCS
+ Before run enter on [/apidocs](http://localhost:8080/apidocs)
