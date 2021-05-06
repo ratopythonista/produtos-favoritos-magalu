@@ -23,7 +23,7 @@ setup(
             'requests==2.22.0',
             'pymongo==3.9.0',
             'loguru==0.3.2',
-            'flask_cors==3.0.8',
+            'flask_cors==3.0.9',
             'flasgger==0.9.3',
             'gunicorn==19.9.0',
             'pyjwt==1.7.1'
